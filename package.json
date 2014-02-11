@@ -1,0 +1,26 @@
+{
+  "name": "Arboretum",
+  "version": "0.0.1",
+  "description": "An interactive tree growing game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/studioludens/Arboretum.git"
+  },
+  "author": "Alexander Rulkens",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "~0.4.2",
+    "underscore": "~1.6.0",
+    "express": "~3.4.8",
+    "jade": "~1.1.5",
+    "grunt-contrib-requirejs": "~0.4.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.3.2"
+  }
+}

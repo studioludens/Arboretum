@@ -1,0 +1,20 @@
+{
+  "name": "Arboretum",
+  "version": "0.0.1",
+  "homepage": "https://github.com/studioludens/Arboretum",
+  "authors": [
+    "Alexander Rulkens <rulkens@gmail.com>"
+  ],
+  "description": "An interactive tree growing game",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ]
+}
