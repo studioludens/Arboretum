@@ -52,6 +52,7 @@ function( Detector, RenderController, InteractionController, settings, Tree, Env
 			
 			// start main rendering loop
 			render();
+			
 		},
 		/*
 			tick function: calculate on world tick

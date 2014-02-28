@@ -12,5 +12,12 @@ define( function( Environment ){
 		
 	};
 	
+	Air.prototype = {
+		
+		tick : function(){
+			console.log("[Air.tick]");
+		}
+	};
+	
 	return Air;
 });

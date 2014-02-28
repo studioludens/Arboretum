@@ -14,32 +14,34 @@ define(['jquery',
 		
 function( $, THREE, _, Stats, RenderSettings ){
 	
-	var RenderController = function(){
+	var RenderController = function( settings ){
 		
-		
-		this.webglEl = document.getElementById('webgl');
-
-		if (!Detector.webgl) {
-			Detector.addGetWebGLMessage(webglEl);
-			return;
-		}
-
 		this.width  = window.innerWidth;
 		this.height = window.innerHeight;
 		
 		/**
 		all the elements that are rendered to the scene
 		**/
-		this.renderElements = {
-			models: [],
-			lights: []
-		};
+		this.renderElements = {};
 		
-		_(this).extend(RenderSettings);
+		/*
+			a list of all plugins currently active in the renderer
+		*/
+		this.plugins = [];
+		
+		this.settings = {};
+		_( this.settings ).extend( RenderSettings );
+		_( this.settings ).extend( settings );
+		
+		this.webglEl = document.getElementById( this.settings.domElement );
+
+		if (!Detector.webgl) {
+							Detector.addGetWebGLMessage(webglEl);
+							return;
+						}
 		
 		// default objects
 		this.renderer = null;
-		this.camera = null;
 		this.scene = null;
 		this.manager = null;
 		
@@ -49,51 +51,40 @@ function( $, THREE, _, Stats, RenderSettings ){
 	RenderController.prototype = {
 		
 		init : function(){
-			this.initStats();
+			
+			// first initialize the scene
 			this.initScene();
-			this.initLights();
+			
+			var _this = this;
+			
+			// initialize plugins
+			_(this.settings.plugins).each( function( plugin ){
+				var pluginObject = new plugin( _this.settings[plugin] );
+				
+				// initialize plugin object
+				pluginObject.init();
+				
+				_this.plugins.push( pluginObject );
+				// get the exports and extend the rendercontroller with them
+				_( _this ).extend( pluginObject.exports() );
+				
+				// add each item from the sceneExports object to the scene
+				_( pluginObject.sceneExports() ).each( function( sceneItem ){
+					_this.scene.add( sceneItem );
+				});
+			});
+			
+			this.webglEl.appendChild(this.renderer.domElement);
 			
 		},
 		
-		initStats : function(){
-			
-			this.stats = new Stats();
-			this.stats.domElement.style.position = 'absolute';
-			this.stats.domElement.style.top = '0px';
-			this.webglEl.appendChild( this.stats.domElement );
-		},
 		
 		initScene : function(){
 			this.scene = new THREE.Scene();
 
-			var cameraSettings = this.cameraSettings;
-
-			this.camera = new THREE.PerspectiveCamera(cameraSettings.fov, this.width / this.height, cameraSettings.near, cameraSettings.far);
-
-			this.camera.position = cameraSettings.position;
-			//this.camera.rotation = cameraOptions.rotation;
-			this.camera.lookAt( cameraSettings.target );
-
-			//renderer = new THREE.WebGLDeferredRenderer({ antialias: true });
+			
 			this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			this.renderer.setSize(this.width, this.height);
-
-
-			this.renderer.shadowMapEnabled = true;
-			this.renderer.shadowMapSoft = true;
-			this.renderer.shadowMapCullFace = THREE.CullFaceBack;
-			this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
-
-			this.renderer.physicallyBasedShading = true;
-
-			this.manager = new THREE.LoadingManager();
-
-			// some simple event listeners
-			this.manager.onProgress = function ( item, loaded, total ) {
-
-				console.log( item, loaded, total );
-
-			};
 			
 			var _this = this;
 			
@@ -102,53 +93,14 @@ function( $, THREE, _, Stats, RenderSettings ){
 				
 				_this.width = window.innerWidth;
 				_this.height = window.innerHeight;
-
+			
 				_this.camera.aspect = window.innerWidth / window.innerHeight;
 				_this.camera.updateProjectionMatrix();
-
+			
 				_this.renderer.setSize( window.innerWidth, window.innerHeight );
-
+			
 			}, false );
 			
-		},
-		
-		// creates and adds the lights
-		initLights : function(){
-
-			var controller = this;
-
-			_(this.lightsSettings).each(function(item, lightIndex){
-
-				var light;
-
-				// create the light
-				if( item.type == "Ambient")
-					light = new THREE.AmbientLight();
-				if( item.type == "Directional")
-					light = new THREE.DirectionalLight();
-				if( item.type == "Spot")
-					light = new THREE.SpotLight();
-				if( item.type == "Hemisphere")
-					light = new THREE.HemisphereLight();
-
-				// loop through properties
-				_(item).each(function(value, index){
-					if( index == "type") return;
-
-					if( typeof value === "string" && value.indexOf("#") == 0){
-						// it's a color
-						light[index] = new THREE.Color(value);
-					} else {
-						// filter out undesirable properties
-						if( !_(["type", "name"]).contains( index ) ) light[index] = value;
-					}
-				});
-
-				controller.renderElements.lights.push( light );
-
-				controller.scene.add( light );
-			});
-
 		},
 		
 		/**
@@ -156,22 +108,16 @@ function( $, THREE, _, Stats, RenderSettings ){
 		**/
 		render : function() {
 
+			var _this = this;
+			
 			this.dispatchEvent({type: "frameRender"});
 
-			//this.updateScene();
-			//this.updateMaterials();
-			//this.updateLights();
-
-			this.stats.update();
+			// update all plugins
+			_( this.plugins ).each( function( plugin ){
+				plugin.update( _this.scene );
+			});
 			
-			
-			// if( this.effectsEnabled ){
-			// 				this.updateEffects();
-			// 				this.composer.render();
-			// } else {
-				this.renderer.render(this.scene, this.camera);
-			// }
-
+			this.renderer.render(this.scene, this.camera);
 			this.dispatchEvent({type: "frameRendered"});
 		}
 	};

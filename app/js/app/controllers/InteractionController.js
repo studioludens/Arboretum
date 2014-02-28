@@ -22,7 +22,7 @@ function( $, _, TrackballControls ){
 		
 		init : function(){
 			
-			this.controls = new TrackballControls( this.renderController.camera, this.renderController.renderer.domElement );
+			//this.controls = new TrackballControls( this.renderController.camera, this.renderController.renderer.domElement );
 			
 			this.initMouseHandlers();
 		},

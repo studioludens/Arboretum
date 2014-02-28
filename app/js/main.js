@@ -16,6 +16,7 @@ require.config({
 		controllers: 'app/controllers',
 		settings: 'app/settings',
 		tree: 'app/tree',
+		renderPlugins : 'app/render-plugins',
 		
 		
 		jquery: 'bower-lib/jquery/jquery',

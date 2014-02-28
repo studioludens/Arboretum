@@ -32,10 +32,10 @@ function( THREE ){
 			return this._pos;	
 		},
 		
-		pos : function( value ){
-			if( value ) this._pos = value;
+		normal : function( value ){
+			if( value ) this._normal = value;
 			
-			return this._pos;	
+			return this._normal;	
 		},
 		
 		tick: function(){
