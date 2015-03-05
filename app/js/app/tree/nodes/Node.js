@@ -20,8 +20,7 @@ function( THREE ){
 		
 		// setup basic geometry
 		this._geometry = new THREE.SphereGeometry(1,4,4);
-		
-		
+
 	};
 	
 	Node.prototype = {

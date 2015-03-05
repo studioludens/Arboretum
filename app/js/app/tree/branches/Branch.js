@@ -47,7 +47,7 @@ define( function(){
 				var n = _(this._nodes).where( { pos : pos });
 				if( n ) return n.node;
 			}
-		}
+		},
 		
 		tick : function(){
 			_(this._nodes).each(function(node){

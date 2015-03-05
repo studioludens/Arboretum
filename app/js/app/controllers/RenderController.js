@@ -36,9 +36,9 @@ function( $, THREE, _, Stats, RenderSettings ){
 		this.webglEl = document.getElementById( this.settings.domElement );
 
 		if (!Detector.webgl) {
-							Detector.addGetWebGLMessage(webglEl);
-							return;
-						}
+			Detector.addGetWebGLMessage(webglEl);
+			return;
+		}
 		
 		// default objects
 		this.renderer = null;
