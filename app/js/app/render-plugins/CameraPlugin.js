@@ -19,7 +19,7 @@ function( THREE, RenderPlugin, CameraSettings ){
 		_( this.settings ).extend( settings );
 	};
 	
-	CameraPlugin.prototype = new RenderPlugin();;
+	CameraPlugin.prototype = new RenderPlugin();
 	
 	_( CameraPlugin.prototype ).extend({
 		
@@ -32,13 +32,11 @@ function( THREE, RenderPlugin, CameraSettings ){
 			this.camera.position = this.settings.position;
 			//this.camera.rotation = cameraOptions.rotation;
 			this.camera.lookAt( this.settings.target );
-			
 		},
 		
 		exports : function(){
 			return { camera : this.camera };
 		}
-		
 		
 	});
 	

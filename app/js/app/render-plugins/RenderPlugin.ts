@@ -7,3 +7,15 @@ export interface IPlugin {
     sceneExports: Function;
     update: Function;
 }
+
+interface PluginSettings {
+
+}
+
+export class RenderPlugin {
+    settings:PluginSettings;
+
+    constructor(settings:PluginSettings){
+        this.settings = settings;
+    }
+}

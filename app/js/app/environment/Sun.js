@@ -1,17 +1,17 @@
-// 
-//  Sun.js
-//  Arboretum
-//  
-//  Created by Alexander Rulkens on 2014-02-11.
-//  Copyright 2014 Studio Ludens. All rights reserved.
-// 
-define( function( ){
-	console.log( "environment/Sun loaded");
-	
-	var Sun = function(){
-		
-	};
-	
-	return Sun;
-	
-});
+/**
+ * Created by rulkens on 12/03/15.
+ */
+/// <reference path="EnvironmentFactor.ts" />
+var Environment;
+(function (Environment) {
+    var Sun = (function () {
+        function Sun() {
+        }
+        Sun.prototype.tick = function () {
+            console.log('[Sun].tick');
+        };
+        return Sun;
+    })();
+    Environment.Sun = Sun;
+})(Environment || (Environment = {}));
+//# sourceMappingURL=Sun.js.map

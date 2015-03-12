@@ -35,6 +35,7 @@ require.config({
 			exports: 'Detector'
 		},
 		'trackballControls': {
+            depends: 'three',
 			exports: 'THREE.TrackballControls'
 		},
 		'three' : {

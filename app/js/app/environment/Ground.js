@@ -1,16 +1,17 @@
-// 
-//  Ground.js
-//  Arboretum
-//  
-//  Created by Alexander Rulkens on 2014-02-11.
-//  Copyright 2014 Studio Ludens. All rights reserved.
-// 
-define( function( ){
-	console.log( "environment/Ground loaded");
-	
-	var Ground = function(){
-		
-	};
-	
-	return Ground;
-});
+/**
+ * Created by rulkens on 12/03/15.
+ */
+/// <reference path="EnvironmentFactor.ts" />
+var Environment;
+(function (Environment) {
+    var Ground = (function () {
+        function Ground() {
+        }
+        Ground.prototype.tick = function () {
+            console.log('[Ground].tick');
+        };
+        return Ground;
+    })();
+    Environment.Ground = Ground;
+})(Environment || (Environment = {}));
+//# sourceMappingURL=Ground.js.map

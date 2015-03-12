@@ -7,10 +7,13 @@
 // 
 define(['three'], function(THREE){
 	return {
-		cube : {
-			width: 1,
-			height: 1,
-			depth: 10
-		}
+		"cube" : {
+			"width": 1,
+			"height": 1,
+			"depth": 10
+		},
+        "tree" : {
+            "name": "default tree"
+        }
 	};
-})
+});

@@ -1,23 +1,17 @@
-// 
-//  Air.js
-//  Arboretum
-//  
-//  Created by Alexander Rulkens on 2014-02-11.
-//  Copyright 2014 Studio Ludens. All rights reserved.
-// 
-define( function( Environment ){
-	console.log( "environment/Air loaded");
-	
-	var Air = function(){
-		
-	};
-	
-	Air.prototype = {
-		
-		tick : function(){
-			console.log("[Air.tick]");
-		}
-	};
-	
-	return Air;
-});
+/**
+ * Created by rulkens on 12/03/15.
+ */
+/// <reference path="EnvironmentFactor.ts" />
+var Environment;
+(function (Environment) {
+    var Air = (function () {
+        function Air() {
+        }
+        Air.prototype.tick = function () {
+            console.log('[Air].tick');
+        };
+        return Air;
+    })();
+    Environment.Air = Air;
+})(Environment || (Environment = {}));
+//# sourceMappingURL=Air.js.map

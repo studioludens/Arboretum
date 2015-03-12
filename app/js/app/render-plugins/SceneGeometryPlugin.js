@@ -7,8 +7,9 @@
 // 
 define( ['three',
 		'renderPlugins/RenderPlugin',
-		'settings/SceneGeometrySettings'], 
-function( THREE, RenderPlugin, SceneGeometrySettings ){
+		'settings/SceneGeometrySettings',
+        'tree/Tree'],
+function( THREE, RenderPlugin, SceneGeometrySettings, Tree ){
 	
 	var SceneGeometryPlugin = function( settings ){
 		this.settings = {};
@@ -25,17 +26,23 @@ function( THREE, RenderPlugin, SceneGeometrySettings ){
 			console.log("[SceneGeometryPlugin.init]");
 			
 			this.cube = new THREE.Mesh( new THREE.CubeGeometry( this.settings.cube.width, this.settings.cube.height, this.settings.cube.depth ), new THREE.MeshNormalMaterial() );
-		},
+		    this.tree = new Tree(this.settings.tree);
+        },
 		
 		update : function( scene ){
-			this.cube.rotation.x += .007;
-			this.cube.rotation.y += .003;
+
+            // DEBUG: try a continuous rotation
+			this.cube.rotation.x += .003;
+			this.cube.rotation.y += .001;
+
+            // move the simulator one tick forwards
+            this.tree.tick();
 		},
 		
 		sceneExports : function(){
-			return [ this.cube ];
+			return [ this.cube, this.tree.geometry() ];
 		}
-	})
+	});
 	
 	return SceneGeometryPlugin;
 });

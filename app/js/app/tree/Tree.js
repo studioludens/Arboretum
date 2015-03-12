@@ -5,9 +5,9 @@
 //  Created by Alexander Rulkens on 2014-02-11.
 //  Copyright 2014 Studio Ludens. All rights reserved.
 // 
-define( ['tree/nodes/Node'], 
+define( ['tree/nodes/RootNode'],
 
-function( Node ){
+function( RootNode ){
 	
 	console.log("Tree loaded");
 	
@@ -15,7 +15,7 @@ function( Node ){
 		
 		// bounding box
 		this.aabb = null;
-		this.rootNode = new Node();
+		this.rootNode = new RootNode();
 	};
 	
 	Tree.prototype = {
@@ -24,7 +24,11 @@ function( Node ){
 			console.log("Tree tick");
 			
 			this.rootNode.tick();
-		}
+		},
+
+        geometry: function(){
+            return this.rootNode.geometry();
+        }
 	};
 	
 	return Tree;
